@@ -2,9 +2,9 @@
   "name": "metrics-fetcher",
   "private": true,
   "scripts": {
-    "nile": "node index.js nile",
-    "ramses": "node index.js ramses",
-    "nuri": "node index.js nuri",
+    "nile": "node kingdom.js nile",
+    "ramses": "node kingdom.js ramses",
+    "nuri": "node kingdom.js nuri",
     "getEqualData": "node equalizer.js",
     "ocxHolders": "node ocxHolders.js"
   },
