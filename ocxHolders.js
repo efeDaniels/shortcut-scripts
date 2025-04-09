@@ -1,4 +1,6 @@
 const { ethers } = require('ethers');
+const fs = require('fs');
+const path = require('path');
 
 const TOKEN_ADDRESS = "0x58024021Fe3eF613fA76e2f36A3Da97eb1454C36";
 const RPC_URL = "https://zircuit1-mainnet.liquify.com";
@@ -40,9 +42,17 @@ async function getTopHolders() {
   }));
 }
 
-getTopHolders().then(holders => {
-  console.log("Top 100 Holders:");
-  holders.slice(0, 100).forEach(({address, balance}, index) => {
-    console.log(`${index + 1}. ${address}: ${balance.toLocaleString()}`);
+async function saveToCSV() {
+  const holders = await getTopHolders();
+  const csvFilePath = path.join(__dirname, 'top_holders.csv');
+  
+  let csvContent = "Rank,Address,Balance\n";
+  holders.slice(0, 100).forEach(({ address, balance }, index) => {
+    csvContent += `${index + 1},${address},${balance}\n`;
   });
-});
+  
+  fs.writeFileSync(csvFilePath, csvContent, 'utf8');
+  console.log(`CSV file saved: ${csvFilePath}`);
+}
+
+saveToCSV().catch(console.error);
